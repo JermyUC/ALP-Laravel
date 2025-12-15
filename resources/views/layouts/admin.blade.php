@@ -22,6 +22,9 @@
                     <a class="nav-link" href="{{ route('plants.index') }}">Plants</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ route('blogs.index') }}">Blogs</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{{ route('sales.index') }}">Sales</a>
                 </li>
                 <li class="nav-item mr-2">
@@ -43,5 +46,6 @@
             @yield('content')
         </main>
     </div>
+    @stack('scripts')
 </body>
 </html>
