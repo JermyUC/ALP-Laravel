@@ -5,6 +5,7 @@ use App\Http\Controllers\PlantController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\GuideController;
 use App\Http\Controllers\SaleController;
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Auth;
@@ -44,9 +45,8 @@ Route::get('/', [PlantController::class, 'home'])->name('home');
 Route::view('/about', 'about', [
     'title' => 'About Us'
 ])->name('about');
-Route::view('/blog', 'blog', [
-    'title' => 'Blog'
-])->name('about');
+Route::get('/blog', [BlogController::class, 'publicIndex'])->name('blog');
+Route::get('/blogs/{blog}', [BlogController::class, 'show'])->name('blogs.show');
 
 Route::view('/profile', 'profile')->name('profile');
 Route::get('/store', [PlantController::class, 'shop'])->name('store');
@@ -59,6 +59,9 @@ Route::get('/guide', [GuideController::class, 'index'])->name('guide');
 Route::resource('categories', CategoryController::class);
 Route::resource('plants', PlantController::class);
 Route::resource('users', UserController::class);
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::resource('blogs', BlogController::class)->except(['show']);
+});
 
 Route::get('/sales', [SaleController::class, 'index'])->name('sales.index');
 
